@@ -1,0 +1,24 @@
+{
+  "name": "groupchat",
+  "version": "1.0.0",
+  "description": "realtime chat app with rooms  ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "author": "sandil parhi",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "cryptr": "^6.0.2",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "qs": "^6.10.1",
+    "socket.io": "^4.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
