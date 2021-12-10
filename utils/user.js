@@ -1,4 +1,6 @@
+const MessageModel = require('../api/models/messages')
 const users = [];
+const moment = require('moment')
 
 // Join user to chat
 function userJoin(id, username, room) {
@@ -20,6 +22,7 @@ function userLeave(id) {
 
   if (index !== -1) {
     return users.splice(index, 1)[0];
+
   }
 }
 
@@ -40,10 +43,22 @@ function getMessageStatus (id){
   }
 }
 
+function getMessages(msg, user, room){
+  let message = new MessageModel({
+    room : room,
+    sender: user,
+    message: msg,
+    time : moment().format('hh:mm a'),
+    date : moment().format('DD-MM-YYYY')
+})
+m = message.save();
+}
+
 module.exports = {
   userJoin,
   getCurrentUser,
   userLeave,
   getRoomUsers,
-  getMessageStatus
+  getMessageStatus,
+  getMessages
 };

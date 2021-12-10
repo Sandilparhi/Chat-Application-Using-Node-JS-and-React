@@ -19,24 +19,42 @@ socket.on('roomUsers', ({ room, users }) => {
   outputUsers(users);
 });
 
+url = 'http://localhost:2595/dbMessage'
+    fetch(url)
+    .then(chat => {
+        return chat.json()
+    })
+    .then(json => {
+        json.map(chat => {
+            outputMessage({
+                username: chat.sender,
+                text: chat.message,
+                time: chat.time,
+                date: chat.date,
+            })
+        })
+    })
+
 // Message from server
 socket.on('message', (message, status) => {
  // myMsg = 'delivered'
  console.log(message );
- //outputMessage(message, status);
- url = "http://localhost:2595/decrypt?message=" + message.text;
- console.log("URL : " + url);
- fetch(url)
-   .then((res) => res.json())
-   .then((decrypted) => {
-     console.log("DECRYPTED ", decrypted);
-     outputMessage({
-         username: message.username,
-       text: decrypted,
-       time: message.time,
-       date: message.date 
-     }, status);
-   });
+ outputMessage(message, status);
+//  url = "http://localhost:2595/decrypt?message=" + message.text;
+//  console.log("URL : " + url);
+//  fetch(url)
+//    .then((res) => res.json())
+//    .then((decrypted) => {
+//      console.log("DECRYPTED ", decrypted);
+//      outputMessage({
+//          username: message.username,
+//        text: decrypted,
+//        time: message.time,
+//        date: message.date 
+//      }, status);
+//    });
+
+  
 
   // Scroll down
   chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -55,12 +73,13 @@ chatForm.addEventListener('submit', (e) => {
 //     return false;
 //   }
 
-  url = "http://localhost:2595/encrypt?message=" + msg;
-  fetch(url)
-    .then((res) => res.json())
-    .then((encrypted) => {
-  socket.emit('chatMessage', encrypted);
-    });
+  // url = "http://localhost:2595/encrypt?message=" + msg;
+  // fetch(url)
+  //   .then((res) => res.json())
+  //   .then((encrypted) => {
+  // socket.emit('chatMessage', encrypted);
+  //   });
+    socket.emit('chatMessage', msg);
 
   // Clear input
   e.target.elements.msg.value = '';
@@ -89,7 +108,7 @@ function outputMessage(message, status) {
 
 // Add room name to DOM
 function outputRoomName(room) {
-  roomName.innerText = room;
+  roomName.innerText = room;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 }
 
 // Add users to DOM
